@@ -66,7 +66,7 @@ function placeDigit(e)
 
 function calculate()
 {
-    const screenContentSplit = screen.innerText.split(/[+\-x\/]/);
+    const screenContentSplit = screen.innerText.split(/[+—x\/]/);
 
     number1 = screenContentSplit[0];
     number2 = screenContentSplit[1];
@@ -84,7 +84,7 @@ function calculate()
 
 function isOperator(digit)
 {
-    return (digit === "+" || digit === "-" || digit === "x" || digit === "/")
+    return (digit === "+" || digit === "—" || digit === "x" || digit === "/")
 }
 
 function readOperators()
@@ -132,7 +132,7 @@ function operate(num1, operator, num2)
         case "+":
             res = add(num1,num2)
             break;
-        case "-":
+        case "—":
             res = subtract(num1,num2)
             break;
         case "x":

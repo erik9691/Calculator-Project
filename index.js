@@ -29,28 +29,20 @@ function placeDigit(e)
 
 function calculate()
 {
+    const screenContentSplit = screenContent.split(/[+\-x\/]/);
+
+    number1 = screenContentSplit[0];
+    number2 = screenContentSplit[1];
+
     for (let i = 0; i < screenContent.length; i++)
     {
         console.log(screenContent.charAt(i))
-        if (screenContent.charAt(i) !== "+" && screenContent.charAt(i) !== "-" && screenContent.charAt(i) !== "x" && screenContent.charAt(i) !== "/")
-        {
-            if (!atNumber2)
-            {
-                console.log("num1");
-                number1 += screenContent.charAt(i).toString();
-            }
-            else
-            {
-                number2 += screenContent.charAt(i).toString();
-            }
-        }
-        else
+        if (screenContent.charAt(i) === "+" || screenContent.charAt(i) === "-" || screenContent.charAt(i) === "x" || screenContent.charAt(i) === "/")
         {
             operator = screenContent.charAt(i);
-            atNumber2 = true;
         }
     }
-    atNumber2 = false
+    
     screen.innerText = operate(parseInt(number1),operator,parseInt(number2))
     screenContent = screen.innerText;
 }
@@ -93,7 +85,7 @@ function operate(num1, operator, num2)
         case "-":
             res = subtract(num1,num2)
             break;
-        case "*":
+        case "x":
             res = multiply(num1,num2)
             break;
         case "/":

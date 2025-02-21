@@ -24,7 +24,11 @@ function placeDigit(e)
     {
         digit = "";
     }
-    if (digit === "clear") 
+    else if (digit === "." && !checkForDots() && !hasCalculated)
+    {
+        digit = previousDigit;
+    }
+    else if (digit === "clear") 
     {
         screen.innerText = ""
 
@@ -102,6 +106,41 @@ function readOperators()
         {
             operators.push(screen.innerText.charAt(i));
         }
+    }
+}
+
+function checkForDots()
+{
+    let afterOperator = false;
+    num1Dot = false;
+    num2Dot = false;
+
+    for (let i = 0; i < screen.innerText.length; i++)
+    {
+        if (screen.innerText.charAt(i) === ".")
+        {
+            if (!afterOperator && num1Dot === false)
+            {
+                num1Dot = true;
+            }
+            else if (afterOperator && num2Dot === false)
+            {
+                num2Dot = true;
+            }
+        }
+        if (isOperator(screen.innerText.charAt(i)))
+        {
+            afterOperator = true
+        }
+    }
+
+    if ((num2Dot === true) || (num1Dot === true && !afterOperator))
+    {
+        return false;
+    }
+    else
+    {
+        return true;
     }
 }
 

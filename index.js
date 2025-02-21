@@ -2,7 +2,7 @@ let number1 = "";
 let operator;
 let number2 = "";
 let result;
-let atNumber2 = false;
+let hasCalculated = false;
 
 let screenContent;
 
@@ -22,9 +22,18 @@ function placeDigit(e)
     }
     else
     {
-        screen.innerText += e.target.className;
-        screenContent = screen.innerText;
+        if (hasCalculated && !isSymbol(e.target.className)) 
+        {
+            screen.innerText = e.target.className;
+        }
+        else
+        {
+            screen.innerText += e.target.className;
+        }
+        hasCalculated = false;
     }
+
+    screenContent = screen.innerText;
 }
 
 function calculate()
@@ -37,14 +46,20 @@ function calculate()
     for (let i = 0; i < screenContent.length; i++)
     {
         console.log(screenContent.charAt(i))
-        if (screenContent.charAt(i) === "+" || screenContent.charAt(i) === "-" || screenContent.charAt(i) === "x" || screenContent.charAt(i) === "/")
+        if (isSymbol(screenContent.charAt(i)))
         {
             operator = screenContent.charAt(i);
         }
     }
     
     screen.innerText = operate(parseInt(number1),operator,parseInt(number2))
-    screenContent = screen.innerText;
+
+    hasCalculated = true;
+}
+
+function isSymbol(digit)
+{
+    return (digit === "+" || digit === "-" || digit === "x" || digit === "/")
 }
 
 function add(num1, num2)

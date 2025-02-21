@@ -4,7 +4,7 @@ let number2 = "";
 let result;
 let hasCalculated = false;
 let operatorsOnScreen = 0;
-let screenContent;
+let previousDigit;
 
 const screen = document.querySelector(".screen");
 const buttons = document.querySelectorAll("button");
@@ -16,20 +16,25 @@ buttons.forEach((button) =>
 
 function placeDigit(e)
 {
-    if (e.target.className === "clear") 
+    const digit = e.target.className;
+
+    if (digit === "clear") 
     {
         screen.innerText = ""
-        
+
         hasCalculated = false;
     }
-    else if (e.target.className === "=")
+    else if (digit === "=")
     {
-        calculate();
+        if (!isOperator(previousDigit) && previousDigit !== "=")
+        {
+            calculate();
+        }
     }
     else
     {
-        //if there are more than 2 operators calculate first then add the second op
-        if (isOperator(e.target.className))
+        //if there are more than 2 non consecutive operators calculate first then add the second op
+        if (isOperator(digit) && !isOperator(previousDigit))
         {
             readOperators();
             if (operators.length === 1) 
@@ -40,25 +45,28 @@ function placeDigit(e)
         }
 
         //replace result with new num if not a operator after calculation
-        if (hasCalculated && !isOperator(e.target.className)) 
+        if (hasCalculated && !isOperator(digit)) 
         {
-            screen.innerText = e.target.className;
+            screen.innerText = digit;
+        }   //if trying to place 2 operators replace the previous
+        else if (isOperator(digit) && isOperator(previousDigit))
+        {
+            screen.innerText = screen.innerText.slice(0, -1) + digit;
         }
-
         else
         {
-            screen.innerText += e.target.className;
+            screen.innerText += digit;
         }
 
         hasCalculated = false;
     }
 
-    screenContent = screen.innerText;
+    previousDigit = digit;
 }
 
 function calculate()
 {
-    const screenContentSplit = screenContent.split(/[+\-x\/]/);
+    const screenContentSplit = screen.innerText.split(/[+\-x\/]/);
 
     number1 = screenContentSplit[0];
     number2 = screenContentSplit[1];
@@ -69,7 +77,7 @@ function calculate()
     console.log(operators);
     console.log(number2);
     
-    screen.innerText = operate(parseInt(number1),operators[0],parseInt(number2))
+    screen.innerText = operate(parseFloat(number1),operators[0],parseFloat(number2))
 
     hasCalculated = true;
 }
@@ -82,11 +90,11 @@ function isOperator(digit)
 function readOperators()
 {
     operators = [];
-    for (let i = 0; i < screenContent.length; i++)
+    for (let i = 0; i < screen.innerText.length; i++)
     {
-        if (isOperator(screenContent.charAt(i)))
+        if (isOperator(screen.innerText.charAt(i)))
         {
-            operators.push(screenContent.charAt(i));
+            operators.push(screen.innerText.charAt(i));
         }
     }
 }

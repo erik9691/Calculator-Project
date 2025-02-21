@@ -16,7 +16,7 @@ buttons.forEach((button) =>
 
 function placeDigit(e)
 {
-    const digit = e.target.className;
+    let digit = e.target.className;
 
     //this is to prevent placing an operator with no number behind.
     //digit = "" to prevent lastDigit related bugs
@@ -28,10 +28,23 @@ function placeDigit(e)
     {
         digit = previousDigit;
     }
+    else if (digit === "delete")
+    {
+        if (hasCalculated) 
+        {
+            screen.innerText = ""
+            hasCalculated = false;
+        }
+        else
+        {
+            screen.innerText = screen.innerText.slice(0, -1);
+            digit = screen.innerText.slice(-1);
+            console.log(digit);
+        }
+    }
     else if (digit === "clear") 
     {
         screen.innerText = ""
-
         hasCalculated = false;
     }
     else if (digit === "=")

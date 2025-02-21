@@ -91,5 +91,10 @@ button
 
 button.clear
 {
+    background-color: rgb(218, 95, 38);
+}
+
+button.delete
+{
     background-color: rgb(201, 41, 36);
 }

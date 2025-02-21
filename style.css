@@ -36,15 +36,17 @@ button
 }
 .screen
 {
+    box-sizing: border-box;
     background-color: rgb(195, 199, 191);
     color: rgb(0, 0, 0);
     font-family: "DigitalCalculator", sans-serif;
     font-size: 670%;
     text-align: end;
     overflow: hidden;
-    padding: 0 2%;
+    padding: 0 2% 0 0;
     margin-top: 5%;
     width: 80%;
+    height: 1.2em;
     border: 5px inset rgb(0, 0, 0);
 }
 .btns-container

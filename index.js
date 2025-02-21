@@ -1,3 +1,24 @@
+let number1;
+let operator;
+let number2;
+
+let screenContent;
+
+const screen = document.querySelector(".screen");
+const buttons = document.querySelectorAll("button");
+
+buttons.forEach((button) => 
+{
+    button.addEventListener("click", function(e){placeDigit(e);});
+});
+
+function placeDigit(e)
+{
+    console.log("Pressed!");
+    screen.innerText += e.target.className;
+    screenContent = screen.innerText;
+}
+
 function add(num1, num2)
 {
     const res = num1 + num2;
@@ -21,10 +42,6 @@ function divide(num1,num2)
     const res = num1 / num2;
     return res;
 }
-
-let number1;
-let operator;
-let number2;
 
 function operate(num1, operator, num2)
 {

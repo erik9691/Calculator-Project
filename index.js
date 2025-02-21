@@ -1,9 +1,9 @@
 let number1 = "";
-let operator;
+let operators = [];
 let number2 = "";
 let result;
 let hasCalculated = false;
-
+let operatorsOnScreen = 0;
 let screenContent;
 
 const screen = document.querySelector(".screen");
@@ -22,14 +22,28 @@ function placeDigit(e)
     }
     else
     {
-        if (hasCalculated && !isSymbol(e.target.className)) 
+        //if there are more than 2 operators calculate first then add the second op
+        if (isOperator(e.target.className))
+        {
+            readOperators();
+            if (operators.length === 1) 
+            {
+                console.log("SECOND OPERATOR " + operators.length + operators);
+                calculate();
+            }
+        }
+
+        //replace result with new num if not a operator after calculation
+        if (hasCalculated && !isOperator(e.target.className)) 
         {
             screen.innerText = e.target.className;
         }
+
         else
         {
             screen.innerText += e.target.className;
         }
+
         hasCalculated = false;
     }
 
@@ -43,29 +57,36 @@ function calculate()
     number1 = screenContentSplit[0];
     number2 = screenContentSplit[1];
 
-    for (let i = 0; i < screenContent.length; i++)
-    {
-        console.log(screenContent.charAt(i))
-        if (isSymbol(screenContent.charAt(i)))
-        {
-            operator = screenContent.charAt(i);
-        }
-    }
+    readOperators();
+
+    console.log(number1);
+    console.log(operators);
+    console.log(number2);
     
-    screen.innerText = operate(parseInt(number1),operator,parseInt(number2))
+    screen.innerText = operate(parseInt(number1),operators[0],parseInt(number2))
 
     hasCalculated = true;
 }
 
-function isSymbol(digit)
+function isOperator(digit)
 {
     return (digit === "+" || digit === "-" || digit === "x" || digit === "/")
 }
 
+function readOperators()
+{
+    operators = [];
+    for (let i = 0; i < screenContent.length; i++)
+    {
+        if (isOperator(screenContent.charAt(i)))
+        {
+            operators.push(screenContent.charAt(i));
+        }
+    }
+}
+
 function add(num1, num2)
 {
-    console.log(num1)
-    console.log(num2)
     const res = num1 + num2;
     return res;
 }

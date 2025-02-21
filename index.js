@@ -16,7 +16,13 @@ buttons.forEach((button) =>
 
 function placeDigit(e)
 {
-    if (e.target.className === "=")
+    if (e.target.className === "clear") 
+    {
+        screen.innerText = ""
+        
+        hasCalculated = false;
+    }
+    else if (e.target.className === "=")
     {
         calculate();
     }

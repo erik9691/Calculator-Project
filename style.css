@@ -88,3 +88,8 @@ button
 {
     background-color: rgb(85, 161, 206);
 }
+
+button.clear
+{
+    background-color: rgb(201, 41, 36);
+}

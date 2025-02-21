@@ -4,7 +4,7 @@ let number2 = "";
 let result;
 let hasCalculated = false;
 let operatorsOnScreen = 0;
-let previousDigit;
+let previousDigit = "";
 
 const screen = document.querySelector(".screen");
 const buttons = document.querySelectorAll("button");
@@ -18,6 +18,12 @@ function placeDigit(e)
 {
     const digit = e.target.className;
 
+    //this is to prevent placing an operator with no number behind.
+    //digit = "" to prevent lastDigit related bugs
+    if (isOperator(digit) && screen.innerText.length === 0)
+    {
+        digit = "";
+    }
     if (digit === "clear") 
     {
         screen.innerText = ""
